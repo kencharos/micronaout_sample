@@ -1,0 +1,49 @@
+plugins {
+    id 'com.github.johnrengelman.shadow' version '2.0.4'
+    id 'java'
+    id "application"
+}
+
+// Functionベースの場合固定
+mainClassName = "io.micronaut.function.executor.FunctionApplication"
+
+jar {
+    manifest {
+        attributes 'Main-Class': "io.micronaut.function.executor.FunctionApplication"
+    }
+}
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+dependencies {
+    compileOnly "io.micronaut:inject-java:${projectVersion}"
+    compile "io.micronaut:management:${projectVersion}"
+    compile 'javax.annotation:javax.annotation-api:1.3.2'
+    compile "io.micronaut:function-aws:${projectVersion}"
+
+    // test functions as standalon server
+    testCompile "io.micronaut:function-client:${projectVersion}"
+    testRuntime "io.micronaut:function-web:${projectVersion}"
+    testRuntime "io.micronaut:http-server-netty:${projectVersion}"
+
+    // uncomment the following dependencies to add zipkin tracing
+//    compile 'io.opentracing.brave:brave-opentracing:0.30.0'
+//    runtime "io.micronaut:tracing:${projectVersion}"
+//    runtime 'io.zipkin.brave:brave-instrumentation-http:4.19.0'
+//    runtime 'io.zipkin.reporter2:zipkin-reporter:2.5.0'
+
+    // uncomment the following lines to add jaeger tracing
+//    compile "io.micronaut:tracing:${projectVersion}"
+//    runtime 'io.jaegertracing:jaeger-core:0.27.0-RC1'
+
+
+    runtime "ch.qos.logback:logback-classic:1.2.3"
+
+    testCompile "junit:junit:4.12"
+    testCompile "io.micronaut:inject-java:${projectVersion}"
+    testCompile "io.micronaut:http-client:${projectVersion}"
+}
+shadowJar {
+    mergeServiceFiles()
+}

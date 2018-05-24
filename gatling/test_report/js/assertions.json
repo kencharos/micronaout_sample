@@ -1,0 +1,10 @@
+{
+  "simulation": "computerdatabase.ApiSimulation",
+  "simulationId": "test6",
+  "start": 1527178679769,
+  "description": "",
+  "scenarios": ["test"],
+  "assertions": [
+
+  ]
+}
